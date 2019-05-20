@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "70378817665",
+    "firebase_url": "https://siyapathaeats-b53e0.firebaseio.com",
+    "project_id": "siyapathaeats-b53e0",
+    "storage_bucket": "siyapathaeats-b53e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70378817665:android:5f618e4fb41be54c",
+        "android_client_info": {
+          "package_name": "com.example.siyapathaeats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70378817665-2mga0cd25g1dcdu15634phl1vtjagt4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJb81KSrXX-Kg3h0v_W-gfCxiGmdFL98s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70378817665-2mga0cd25g1dcdu15634phl1vtjagt4q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

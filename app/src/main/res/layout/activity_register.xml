@@ -84,7 +84,7 @@
         android:text="Sign Up" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/regUserPhoto"
         android:layout_width="138dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

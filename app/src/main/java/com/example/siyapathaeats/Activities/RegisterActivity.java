@@ -19,10 +19,15 @@ import android.widget.Toast;
 
 import com.example.siyapathaeats.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -122,8 +127,50 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUserInfo(String name, Uri pickedImgUri, FirebaseUser currentUser) {
+    //update user photo and name
+    private void updateUserInfo(final String name, Uri pickedImgUri, final FirebaseUser currentUser) {
 
+        //first we need to upload user photo
+        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
+        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                //image upload successfully
+                //now we can get our image url
+
+                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        //uri con user umage
+
+                        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(name)
+                                .setPhotoUri(uri)
+                                .build();
+
+                        currentUser.updateProfile(profileUpdate)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            //usesr info updated success fully
+                                            showMessage("register success");
+                                            updateUI();
+                                        }
+                                    }
+                                });
+
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void updateUI() {
+        
     }
 
     //simple mothod to show messages

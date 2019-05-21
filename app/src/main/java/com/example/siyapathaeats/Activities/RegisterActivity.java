@@ -78,6 +78,9 @@ public class RegisterActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null){
             //the user has successfull picked as image
             //we need to save
+
+            pickedImgUri = data.getData();
+            ImgUserPhoto.setImageURI(pickedImgUri);
         }
     }
 }

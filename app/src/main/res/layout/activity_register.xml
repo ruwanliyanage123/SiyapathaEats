@@ -20,61 +20,65 @@
         app:srcCompat="@drawable/banner" />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/regName"
+        android:layout_width="260dp"
+        android:layout_height="37dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="96dp"
-        android:layout_marginBottom="274dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="264dp"
+        android:background="@drawable/reg_edittext_style"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="enter name"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/regMail"
+        android:layout_width="260dp"
+        android:layout_height="37dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="98dp"
-        android:layout_marginBottom="218dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="217dp"
+        android:background="@drawable/reg_edittext_style"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="enter email"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/regPassword"
+        android:layout_width="260dp"
+        android:layout_height="37dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="96dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginBottom="169dp"
+        android:background="@drawable/reg_edittext_style"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="enter password"
+        android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/editText7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/regPassword2"
+        android:layout_width="260dp"
+        android:layout_height="37dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="96dp"
-        android:layout_marginBottom="103dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginBottom="116dp"
+        android:background="@drawable/reg_edittext_style"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="re enter password"
+        android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/regBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="47dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="55dp"
         android:text="Button" />
 
     <ImageView

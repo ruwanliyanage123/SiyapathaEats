@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.siyapathaeats.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -27,6 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText userEmail, userPassword, userPassword2, userName;
     private Button regBtn;
+    private FirebaseAuth mAuth;
+
+
 
 
     @Override
@@ -41,6 +50,9 @@ public class RegisterActivity extends AppCompatActivity {
         userPassword2 = findViewById(R.id.regPassword2);
         userName = findViewById(R.id.regName);
         regBtn = findViewById(R.id.regBtn);
+
+        //for firebase
+        mAuth = FirebaseAuth.getInstance();
 
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +97,33 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void CreateUserAccount(String email, String name, String password) {
+    private void CreateUserAccount(String email, final String name, String password) {
+        //this method crate a user account with specific email and password
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    //user account
+                    showMessage("account created");
+                    //after we created user account we need to update
+
+                    updateUserInfo(name, pickedImgUri,mAuth.getCurrentUser());
+
+                }
+                else{
+                    //account failed
+                    showMessage("account creation failed"+ task.getException().getMessage());
+                    regBtn.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+    }
+
+    private void updateUserInfo(String name, Uri pickedImgUri, FirebaseUser currentUser) {
+
     }
 
     //simple mothod to show messages

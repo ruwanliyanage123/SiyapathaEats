@@ -10,7 +10,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.siyapathaeats.R;
@@ -22,12 +25,49 @@ public class RegisterActivity extends AppCompatActivity {
     static int REQUESCODE =1;
     Uri pickedImgUri;
 
+    private EditText userEmail, userPassword, userPassword2, userName;
+    private Button regBtn;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         // views
+
+        userEmail = findViewById(R.id.regMail);
+        userPassword = findViewById(R.id.regPassword);
+        userPassword2 = findViewById(R.id.regPassword2);
+        userName = findViewById(R.id.regName);
+        regBtn = findViewById(R.id.regBtn);
+
+        regBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                regBtn.setVisibility(View.INVISIBLE);
+                final String email = userEmail.getText().toString();
+                final String password = userPassword.getText().toString();
+                final String password2= userPassword2.getText().toString();
+                final String name  = userName.getText().toString();
+
+                if(email.isEmpty() || name.isEmpty()|| password.isEmpty()||!password.equals(password2)){
+                    // something is wrong
+                    showMessage("please verify all fields");
+                    regBtn.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    // everything is ok
+                    //create account for the user 
+
+                    CreateUserAccount(email,name,password);
+                }
+
+            }
+        });
+
 
         ImgUserPhoto = findViewById(R.id.regUserPhoto);
 
@@ -43,6 +83,15 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void CreateUserAccount(String email, String name, String password) {
+    }
+
+    //simple mothod to show messages
+    private void showMessage(String message) {
+        Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG).show();
+
     }
 
     private void openGallery() {

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.siyapathaeats.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -54,6 +55,9 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        updateNavHeader();
+
     }
 
     @Override
@@ -104,7 +108,7 @@ public class Home extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout) {
 
         }
 
@@ -118,12 +122,13 @@ public class Home extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         TextView navUserName = headerView.findViewById(R.id.nav_username);
         TextView navUserMail = headerView.findViewById((R.id.nav_user_mail));
-        ImageView navUserPhot = headerView.findViewById(R.id.login_photo);
+        ImageView navUserPhot = headerView.findViewById(R.id.nav_user_photo);
 
         navUserMail.setText(currentUser.getEmail());
         navUserName.setText(currentUser.getDisplayName());
 
         //now mew will use guide to load user image
         //first we need to import th library
+       Glide.with(this).load(currentUser.getPhotoUrl()).into(navUserPhot);
     }
 }

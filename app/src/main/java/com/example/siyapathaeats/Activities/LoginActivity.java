@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.login_btn);
         mAuth = FirebaseAuth.getInstance();
-        HomeActivity = new Intent(this, com.example.siyapathaeats.Activities.HomeActivity.class);
+        HomeActivity = new Intent(this, com.example.siyapathaeats.Activities.Home.class);
         loginPhoto  = findViewById(R.id.login_photo);
 
         loginPhoto.setOnClickListener(new View.OnClickListener() {

@@ -62,6 +62,9 @@ public class LoginActivity extends AppCompatActivity {
                     btnLogin.setVisibility(View.INVISIBLE);
                     updateUI();
                 }
+                else{
+                    showMessage(task.getException().getMessage());
+                }
             }
         });
     }

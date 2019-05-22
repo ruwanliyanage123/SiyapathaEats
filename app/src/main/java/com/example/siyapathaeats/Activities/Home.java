@@ -16,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.siyapathaeats.Fragments.HomeFragment;
+import com.example.siyapathaeats.Fragments.ProfileFragment;
+import com.example.siyapathaeats.Fragments.SettingsFragment;
 import com.example.siyapathaeats.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -98,18 +101,21 @@ public class Home extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
-        } else if (id == R.id.nav_manage) {
+        }
+        else if (id == R.id.nav_profile) {
 
-        } else if (id == R.id.nav_share) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new ProfileFragment()).commit();
 
-        } else if (id == R.id.nav_logout) {
+        }
 
+        else if (id == R.id.nav_settings) {
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new SettingsFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

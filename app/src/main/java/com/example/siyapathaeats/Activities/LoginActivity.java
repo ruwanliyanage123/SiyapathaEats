@@ -57,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(mail.isEmpty()|| password.isEmpty()){
                     showMessage("please verify all feilds");
+                    btnLogin.setVisibility(View.VISIBLE);
+
                 }
                 else{
                     signIn(mail,password);
@@ -77,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
                     showMessage(task.getException().getMessage());
+                    btnLogin.setVisibility(View.VISIBLE);
                 }
             }
         });

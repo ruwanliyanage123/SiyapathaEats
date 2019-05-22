@@ -91,12 +91,16 @@ public class Home extends AppCompatActivity
         popupDescription = popAddPost.findViewById(R.id.popup_description);
         popupAddBtn = popAddPost.findViewById(R.id.popup_add);
 
+        //load user image
+
+        Glide.with(Home.this).load(currentUser.getPhotoUrl()).into(popupUserImage);
+
         //add post click listener
 
         popupAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                popupAddBtn.setVisibility(View.INVISIBLE);
             }
         });
 

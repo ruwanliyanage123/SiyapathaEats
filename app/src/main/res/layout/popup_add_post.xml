@@ -39,18 +39,20 @@
         tools:layout_editor_absoluteY="91dp" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:scaleType="centerCrop"
+        android:id="@+id/popup_img"
         android:layout_width="0dp"
         android:layout_height="225dp"
+        android:scaleType="centerCrop"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="159dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/popup_add"
         android:layout_width="56dp"
         android:layout_height="56dp"
+        android:background="@drawable/circle_bg"
+        android:padding="12dp"
         app:srcCompat="@drawable/ic_mode_edit_black_24dp"
         tools:layout_editor_absoluteX="177dp"
         tools:layout_editor_absoluteY="344dp" />

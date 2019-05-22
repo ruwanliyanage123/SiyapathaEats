@@ -1,9 +1,13 @@
 package com.example.siyapathaeats.Activities;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +33,7 @@ public class Home extends AppCompatActivity
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
+    Dialog popAddPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +47,14 @@ public class Home extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
+        //init popup
+        iniPopup();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                popAddPost.show();
             }
         });
 
@@ -62,6 +69,14 @@ public class Home extends AppCompatActivity
 
         updateNavHeader();
 
+    }
+
+    private void iniPopup() {
+
+        popAddPost.setContentView(R.layout.popup_add_post);
+        popAddPost.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popAddPost.getWindow().setLayout(Toolbar.LayoutParams.MATCH_PARENT,Toolbar.LayoutParams.WRAP_CONTENT);
+        popAddPost.getWindow().getAttributes().gravity = Gravity.TOP;
     }
 
     @Override

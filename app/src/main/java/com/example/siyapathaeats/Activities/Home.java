@@ -1,12 +1,15 @@
 package com.example.siyapathaeats.Activities;
-
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,7 +23,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.siyapathaeats.Fragments.HomeFragment;
 import com.example.siyapathaeats.Fragments.ProfileFragment;
@@ -32,6 +35,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int PReqCode = 2;
+    private static final int REQUESCODE = 2;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     Dialog popAddPost;
@@ -54,6 +59,8 @@ public class Home extends AppCompatActivity
         //init popup
         iniPopup();
 
+        setupPopupImageCLick();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +80,45 @@ public class Home extends AppCompatActivity
 
         updateNavHeader();
 
+    }
+
+    private void setupPopupImageCLick() {
+        popupPostImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //here when clicked we need to open ckeckk access to the user
+                //we didi this before register activity
+                //going to copy the code
+            }
+        });
+    }
+
+    private void checkAndRequestForPermission(){
+
+        if(ContextCompat.checkSelfPermission(Home.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(Home.this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+                Toast.makeText(Home.this, "please accepr for required permission", Toast.LENGTH_LONG).show();
+            }
+            else {
+                ActivityCompat.requestPermissions(Home.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PReqCode);
+            }
+        }
+        else{
+            //everything goes well: we have permission
+            openGallery();
+        }
+    }
+
+
+    private void openGallery() {
+        //TODO: open gallery intent and wait
+
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, REQUESCODE);
     }
 
     private void iniPopup() {

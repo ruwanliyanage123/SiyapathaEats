@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -29,9 +30,17 @@ import com.bumptech.glide.Glide;
 import com.example.siyapathaeats.Fragments.HomeFragment;
 import com.example.siyapathaeats.Fragments.ProfileFragment;
 import com.example.siyapathaeats.Fragments.SettingsFragment;
+import com.example.siyapathaeats.Models.Post;
 import com.example.siyapathaeats.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -174,6 +183,38 @@ public class Home extends AppCompatActivity
 
                     //everything is okey no empty of null value
                     //TODO create post object and add it to firebase databse
+                    //first we need to upload post image
+                    //accss firebase storage
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("blog_images");
+                    final StorageReference imageFilePath = storageReference.child(pickedImgUri.getLastPathSegment());
+                    imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                           imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                               @Override
+                               public void onSuccess(Uri uri) {
+                                  String imageDownloadLink = uri.toString();
+                                  //create post object
+                                   Post post = new Post(popupTitle.getText().toString(),
+                                           popupDescription.getText().toString(),
+                                           imageDownloadLink,
+                                           currentUser.getUid(),
+                                           currentUser.getPhotoUrl().toString());
+
+                                   //add post to firebase database
+
+                                   addPost(post);
+                               }
+                           }).addOnFailureListener(new OnFailureListener() {
+                               @Override
+                               public void onFailure(@NonNull Exception e) {
+                                   //something goes wrong
+                                   showMessage(e.getMessage());
+                                   popupAddBtn.setVisibility(View.VISIBLE);
+                               }
+                           });
+                        }
+                    });
 
                 }
                 else{
@@ -184,6 +225,28 @@ public class Home extends AppCompatActivity
             }
         });
 
+    }
+
+    private void addPost(Post post) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("posts").push();
+
+        //get post unique ID and update post key
+        String key = myRef.getKey();
+        post.setPostKey(key);
+
+
+        //add post data to firebase
+
+        myRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                showMessage("post added successsfully");
+                popupAddBtn.setVisibility(View.VISIBLE);
+                popAddPost.dismiss();
+            }
+        });
     }
 
     private void showMessage(String message) {

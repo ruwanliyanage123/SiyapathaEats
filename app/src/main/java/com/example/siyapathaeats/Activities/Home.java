@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,6 +43,7 @@ public class Home extends AppCompatActivity
     Dialog popAddPost;
     ImageView popupUserImage, popupPostImage, popupAddBtn;
     TextView popupTitle, popupDescription;
+    private Uri pickedImgUri =null;
 
 
     @Override
@@ -89,6 +91,8 @@ public class Home extends AppCompatActivity
                 //here when clicked we need to open ckeckk access to the user
                 //we didi this before register activity
                 //going to copy the code
+
+                checkAndRequestForPermission();
             }
         });
     }
@@ -121,6 +125,21 @@ public class Home extends AppCompatActivity
         startActivityForResult(galleryIntent, REQUESCODE);
     }
 
+
+    //when user picked an image...
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null){
+            //the user has successful picked as image
+            //we need to save
+
+            pickedImgUri = data.getData();
+            popupPostImage.setImageURI(pickedImgUri);
+        }
+    }
+
     private void iniPopup() {
 
         popAddPost = new Dialog(this);
@@ -147,9 +166,28 @@ public class Home extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 popupAddBtn.setVisibility(View.INVISIBLE);
+                //we need to test all input fields (title and description) and post image
+
+                if(!popupTitle.getText().equals("")
+                && !popupDescription.getText().equals("")
+                        && pickedImgUri != null) {
+
+                    //everything is okey no empty of null value
+                    //TODO create post object and add it to firebase databse
+
+                }
+                else{
+                    showMessage("please verify all input feilds and choose post");
+                    popupAddBtn.setVisibility(View.VISIBLE);
+
+                }
             }
         });
 
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(Home.this, message,Toast.LENGTH_LONG).show();
     }
 
     @Override

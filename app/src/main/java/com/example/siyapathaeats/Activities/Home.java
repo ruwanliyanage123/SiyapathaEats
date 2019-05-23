@@ -168,8 +168,8 @@ public class Home extends AppCompatActivity
                 popupAddBtn.setVisibility(View.INVISIBLE);
                 //we need to test all input fields (title and description) and post image
 
-                if(!popupTitle.getText().equals("")
-                && !popupDescription.getText().equals("")
+                if(!popupTitle.getText().toString().isEmpty()
+                && !popupDescription.getText().toString().isEmpty()
                         && pickedImgUri != null) {
 
                     //everything is okey no empty of null value
